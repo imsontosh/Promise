@@ -1,7 +1,7 @@
 # Promise
 How to Cancel Your Promise
 
-In ES2015, new version of EcmaScript, standart of JavaScript, we got new asynchronous primitive Promise. 
+In ES2015, new version of EcmaScript, standard of JavaScript, we got new asynchronous primitive Promise. 
 It is a very powerful concept, which allows us to avoid notoriously famous callback hell. 
 
 But, as soon it was discovered, you can not cancel a promise, and this is a real problem. 
