@@ -406,53 +406,34 @@ const data = {
 var arr = [] //your array;
 var tree = {};
 
-function addnode(obj){
-  var splitpath = obj.object_name.replace(/^\/|\/$/g, "").split('/');
-  var ptr = tree;
-  for (i=0;i<splitpath.length;i++)
-  {
-    node = { name: splitpath[i],
-    type: 'directory'};
-    if(i == splitpath.length-1)
-    {node.size = obj.size;node.type = obj.type;}
-    ptr[splitpath[i]] = ptr[splitpath[i]]||node;
-    ptr[splitpath[i]].childrenList=ptr[splitpath[i]].childrenList ||{};
-    ptr[splitpath[i]].children = Object.values(ptr[splitpath[i]].childrenList)
-    ptr=ptr[splitpath[i]].childrenList;
-  }    
+function addnode(obj) {
+    var splitpath = obj.object_name.replace(/^\/|\/$/g, "").split('/');
+    var ptr = tree;
+    var temp = null;
+    for (i = 0; i < splitpath.length; i++) {
+        node = {
+            name: splitpath[i],
+            type: 'directory'
+        };
+        if (i == splitpath.length - 1) { node.size = obj.size; node.type = obj.type; }
+        ptr[splitpath[i]] = ptr[splitpath[i]] || node;
+        ptr[splitpath[i]].childrenList = ptr[splitpath[i]].childrenList || {};
+        ptr[splitpath[i]].children = Object.values(ptr[splitpath[i]].childrenList)
+        ptr = ptr[splitpath[i]].childrenList;
+    }
 }
 
 data.objects.map(addnode);
 
-const tree1 = {
-    name: 'tree',
-    value: 'tree',
-    children: [
-      {name: 'master', value: 'master', masterSelect: true},
-      {name: 'one', value: 'one-1'},
-      {
-        name: 'two',
-        value: 'two-1',
-        children: [
-          {name: 'master', value: 'master-2', masterSelect: true},
-          {
-            name: 'child-1',
-            value: 'four-1',
-            children: [
-              {name: 'child-1-1', value: 'descendant-1-1'},
-              {name: 'child-1-2', value: 'descendant-2-1'}
-            ]
-          },
-          {name: 'child-2', value: 'five-1'}
-        ]
-      },
-      {name: 'four', value: 'forty-four-1'},
-      {name: 'five', value: 'fifty-six-1'},
-      {name: 'six', value: 'six-1'},
-      {name: 'seven', value: 'seven-1'},
-      {name: 'eight', value: 'eight-1'},
-      {name: 'nine', value: 'nine-1'}
-    ]
-  };
+function checkItem(element) {
+    if (element.hasOwnProperty('childrenList')) {
+        delete element.childrenList;
+    }
+    if (element.hasOwnProperty('children')) {
+        return element.children.forEach(checkItem);
+    }
+}
 
-console.log(tree);
+checkItem(tree.food_images);
+
+console.log((tree));
